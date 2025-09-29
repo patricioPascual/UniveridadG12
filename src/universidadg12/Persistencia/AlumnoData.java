@@ -15,13 +15,13 @@ import java.sql.Date;
  * @author patri
  */
 public class AlumnoData {
-    private Connection con;
+    private static Connection con;
 
     public AlumnoData(Conexion miConexion) {
-        this.con= miConexion.buscarConexion();
+        con = miConexion.buscarConexion();
     }
  
-    public void guardarAlumno(Alumno a){
+    public static void guardarAlumno(Alumno a){
         String query="INSERT INTO alumno(nombremfechaNac,actuvo) VALUES (?,?,?) ";
          try{
              PreparedStatement ps= con.prepareStatement(query);
