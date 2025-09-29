@@ -22,12 +22,14 @@ public class AlumnoData {
     }
  
     public static void guardarAlumno(Alumno a){
-        String query="INSERT INTO alumno(nombremfechaNac,actuvo) VALUES (?,?,?) ";
+        String query="INSERT INTO alumno(dni,apellido,nombre,fechaNacimiento,estado) VALUES (?,?,?,?,?) ";
          try{
              PreparedStatement ps= con.prepareStatement(query);
-             ps.setString(1, a.getNombre());
-            ps.setDate(2, Date.valueOf(a.getFechaNacimiento()));
-            ps.setBoolean(3, a.isEstado());
+             ps.setString(1, String.valueOf(a.getDni()));
+             ps.setString(2, a.getApellido());
+             ps.setString(3, a.getNombre());
+            ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
+            ps.setBoolean(5, a.isEstado());
             ps.executeUpdate();
          }catch(SQLException ex){
              System.out.println("Error al Guardar Alumno ");

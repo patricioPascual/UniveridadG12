@@ -4,17 +4,23 @@
  */
 package universidadg12.Vistas;
 
+import universidadg12.Persistencia.AlumnoData;
+import universidadg12.Persistencia.Conexion;
+
 /**
  *
  * @author Luza
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    private Conexion miConexion;
+    private AlumnoData alumnoData;
     /**
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
         initComponents();
+        this.miConexion= new Conexion("jdbc:mariadb://localhost:3306/universidadg12","root","");
+        this.alumnoData = new AlumnoData(miConexion);
     }
 
     /**

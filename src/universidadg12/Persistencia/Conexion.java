@@ -14,7 +14,7 @@ public class Conexion {
     private String url;
     private String usuario;
     private String password;
-    private static Connection conexion= null;
+    private  Connection conexion= null;
 
     public Conexion(String url, String usuario, String password) {
         this.url = url;
