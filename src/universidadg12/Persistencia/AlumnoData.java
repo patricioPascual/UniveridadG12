@@ -8,6 +8,7 @@ import java.sql.Connection;
 import universidadg12.Model.Alumno;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 import java.sql.Date;
 /**
@@ -33,8 +34,35 @@ public class AlumnoData {
             ps.executeUpdate();
          }catch(SQLException ex){
              System.out.println("Error al Guardar Alumno ");
-         }
+         }       
                 
+    }
+    
+    public static Alumno BuscarAlumnos(int dni) {
+        
+        Alumno alumno = null;
+        try {
+            String sql="SELECT * FROM Alumnos WHERE dni=? AND estado = 1";
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()) {
+                alumno= new Alumno();
+                alumno.setId_alumno(rs.getInt("id_alumno"));
+               
+                alumno.setDni(dni);
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                alumno.setEstado(true);
                 
+            }
+            
+        } catch (SQLException ex) {
+            System.getLogger(AlumnoData.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        return alumno;
+        
     }
 }

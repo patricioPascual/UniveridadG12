@@ -35,7 +35,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jDayChooser1 = new com.toedter.calendar.JDayChooser();
         escritorio = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -43,6 +42,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mniFormInscripcion = new javax.swing.JMenuItem();
         mnuAlumno = new javax.swing.JMenu();
         mniGestorAlumno = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuMateria = new javax.swing.JMenu();
         mniGestionarMateria = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenu();
@@ -99,6 +99,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mnuAlumno.add(mniGestorAlumno);
 
+        jMenuItem1.setText("Buscar Alumno");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuAlumno.add(jMenuItem1);
+
         jMenuBar1.add(mnuAlumno);
 
         mnuMateria.setText("Materia");
@@ -137,6 +145,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         gestorAlumno.setVisible(true);
     }//GEN-LAST:event_mniGestorAlumnoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        BuscarAlumnos buscarAlumnos = new BuscarAlumnos();
+        escritorio.add(buscarAlumnos);
+        buscarAlumnos.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,11 +188,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
-    private com.toedter.calendar.JDayChooser jDayChooser1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem mniFormInscripcion;
     private javax.swing.JMenuItem mniGestionarMateria;
