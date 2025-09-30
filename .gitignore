@@ -1,1 +1,11 @@
 /build/
+*.class 
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz 
+/bin/  
+nbproject/private/
+nbproject/build-impl.xml
+nbproject/project.properties.generated_from_pom
