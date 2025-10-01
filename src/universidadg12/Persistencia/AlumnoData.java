@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 /**
  *
  * @author patri
@@ -32,8 +34,9 @@ public class AlumnoData {
             ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
             ps.setBoolean(5, a.isEstado());
             ps.executeUpdate();
+            ps.close();
          }catch(SQLException ex){
-             System.out.println("Error al Guardar Alumno ");
+             JOptionPane.showMessageDialog(null, "Error al guardar Alumno");
          }       
                 
     }
@@ -42,7 +45,7 @@ public class AlumnoData {
         
         Alumno alumno = null;
         try {
-            String sql="SELECT * FROM Alumnos WHERE dni=? AND estado = 1";
+            String sql="SELECT * FROM alumno WHERE dni=? AND estado = 1";
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1, dni);
             ResultSet rs=ps.executeQuery();
@@ -55,14 +58,34 @@ public class AlumnoData {
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setEstado(true);
+                ps.close();
                 
             }
             
         } catch (SQLException ex) {
-            System.getLogger(AlumnoData.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
         }
         
         return alumno;
         
     }
-}
+    public static void modificarAlumno(Alumno a){
+        
+        
+         String query="UPDATE  alumno SET  dni=?, apellido=?,nombre=?,fechaNacimiento=?,estado=?  WHERE dni=?  ";
+         try{
+             PreparedStatement ps= con.prepareStatement(query);
+             ps.setInt(1,a.getDni());
+             ps.setString(2, a.getApellido());
+             ps.setString(3, a.getNombre());
+            ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
+            ps.setBoolean(5, a.isEstado());
+            ps.setInt(6, a.getDni());
+            ps.executeUpdate();
+            ps.close();
+         }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "Error al Accer a la Base de datos");
+         }       
+          
+    }
+    }

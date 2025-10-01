@@ -79,6 +79,7 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
 
     private void JBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBotonActionPerformed
         JOptionPane.showMessageDialog(this,AlumnoData.BuscarAlumnos(Integer.parseInt(txtDni.getText())));
+                
     }//GEN-LAST:event_JBotonActionPerformed
 
     private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed

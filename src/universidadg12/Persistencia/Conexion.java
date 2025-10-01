@@ -6,6 +6,7 @@ package universidadg12.Persistencia;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author patri
@@ -29,7 +30,7 @@ public class Conexion {
                 conexion=DriverManager.getConnection(url,usuario,password);
                 
             }catch(SQLException |ClassNotFoundException ex){
-                System.out.println("No se puede conectar o no se puede cargar el Driver");
+                JOptionPane.showMessageDialog(null, "No se puede conectar o no se puede cargar el Driver");
             }
         }
         return conexion;

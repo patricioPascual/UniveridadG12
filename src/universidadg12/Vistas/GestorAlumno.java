@@ -9,6 +9,7 @@ import universidadg12.Model.Alumno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.sql.Date;
+import javax.swing.JOptionPane;
 import universidadg12.Persistencia.AlumnoData;
 
 /**
@@ -46,6 +47,7 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         dtcFechaNac = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         lblDni.setText("DNI");
 
@@ -84,6 +86,13 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
 
         jLabel1.setText("FEC NAC");
 
+        jButton1.setText("Modificar ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -92,6 +101,8 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
                 .addGap(39, 39, 39)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -144,7 +155,8 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(jButton1))
                 .addGap(61, 61, 61))
         );
 
@@ -165,8 +177,8 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         int dni = Integer.parseInt(txtDni.getText());
-        String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
+        String nombre = txtNombre.getText();
         String estadotxt = cmbEstado.getSelectedItem().toString();
         LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         boolean estado;
@@ -176,7 +188,7 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
             estado = false;
         }
         
-        Alumno alumno = new Alumno(dni, nombre, apellido, fechaNac, estado);
+        Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
         AlumnoData.guardarAlumno(alumno);
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -193,12 +205,34 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDniActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     
+         int dni = Integer.parseInt(txtDni.getText());
+        String apellido = txtApellido.getText();
+        String nombre = txtNombre.getText();
+        String estadotxt = cmbEstado.getSelectedItem().toString();
+        LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        boolean estado;
+        if (estadotxt.equalsIgnoreCase("Activo")) {
+            estado = true;
+        } else {
+            estado = false;
+        }
+        
+        Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
+        AlumnoData.modificarAlumno(alumno);
+       
+       
+       JOptionPane.showMessageDialog(this, "Alumno Modificado con Exito");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbEstado;
     private com.toedter.calendar.JDateChooser dtcFechaNac;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
