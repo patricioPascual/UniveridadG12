@@ -4,12 +4,10 @@
  */
 package universidadg12.Vistas;
 
-import java.time.LocalDate;
 import universidadg12.Model.Alumno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.sql.Date;
-import javax.swing.JOptionPane;
 import universidadg12.Persistencia.AlumnoData;
 
 /**
@@ -206,8 +204,8 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-         int dni = Integer.parseInt(txtDni.getText());
+
+        int dni = Integer.parseInt(txtDni.getText());
         String apellido = txtApellido.getText();
         String nombre = txtNombre.getText();
         String estadotxt = cmbEstado.getSelectedItem().toString();
@@ -218,12 +216,10 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
         } else {
             estado = false;
         }
-        
+
         Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
         AlumnoData.modificarAlumno(alumno);
-       
-       
-       JOptionPane.showMessageDialog(this, "Alumno Modificado con Exito");
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
