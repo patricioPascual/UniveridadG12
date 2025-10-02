@@ -20,6 +20,13 @@ public class Alumno {
     public Alumno() {
     }
     
+    public Alumno(int dni, String apellido, String nombre, LocalDate fechaNacimiento) {
+        this.dni = dni;
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
     public Alumno(int dni, String apellido, String nombre, LocalDate fechaNacimiento, boolean estado) {
         this.dni = dni;
         this.apellido = apellido;

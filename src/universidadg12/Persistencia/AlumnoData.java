@@ -9,9 +9,9 @@ import universidadg12.Model.Alumno;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-
 import java.sql.Date;
-import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,7 +51,7 @@ public class AlumnoData {
 
         Alumno alumno = null;
         try {
-            String sql = "SELECT * FROM alumno WHERE dni=? AND estado = 1";
+            String sql = "SELECT * FROM alumno WHERE dni=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             ResultSet rs = ps.executeQuery();
@@ -63,7 +63,14 @@ public class AlumnoData {
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alumno.setEstado(true);
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
+                } else {
+                    estado = false;
+                }
+                alumno.setEstado(estado);
                 ps.close();
 
             } else {
@@ -80,15 +87,14 @@ public class AlumnoData {
 
     public static void modificarAlumno(Alumno a) {
 
-        String query = "UPDATE  alumno SET  dni=?, apellido=?,nombre=?,fechaNacimiento=?,estado=?  WHERE dni=?  ";
+        String query = "UPDATE  alumno SET  dni=?, apellido=?,nombre=?,fechaNacimiento=?  WHERE dni=?  ";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, a.getDni());
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
-            ps.setBoolean(5, a.isEstado());
-            ps.setInt(6, a.getDni());
+            ps.setInt(5, a.getDni());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno modificado con exito");
@@ -99,5 +105,37 @@ public class AlumnoData {
         }
 
     }
-
+    
+    //Baja logica establece el estado en falso o 0
+    public static void darBajaAlumno(int dni) {
+    
+        try {
+            String sql= "UPDATE  alumno SET  estado = 0 WHERE dni = ?";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Baja realizada");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Accer a la Base de datos");
+        }
+    }
+    
+    public static void darAltaAlumno(int dni) {
+    
+        try {
+            String sql= "UPDATE  alumno SET  estado = 1 WHERE dni = ?";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Alta realizada");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Accer a la Base de datos");
+        }
+    }
 }

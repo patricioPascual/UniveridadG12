@@ -5,6 +5,7 @@
 package universidadg12.Vistas;
 
 import javax.swing.JOptionPane;
+import universidadg12.Model.Alumno;
 import universidadg12.Persistencia.AlumnoData;
 
 /**
@@ -31,23 +32,17 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
-        JBoton = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("DNI:");
         jLabel1.setAutoscrolls(true);
 
-        txtDni.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Consultar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDniActionPerformed(evt);
-            }
-        });
-
-        JBoton.setText("Consultar");
-        JBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBotonActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -68,7 +63,7 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
                 .addGap(72, 72, 72)
                 .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(JBoton)
+                .addComponent(btnBuscar)
                 .addContainerGap(122, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -81,7 +76,7 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
                 .addGap(110, 110, 110)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(JBoton)
+                    .addComponent(btnBuscar)
                     .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
                 .addComponent(btnSalir)
@@ -91,14 +86,10 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBotonActionPerformed
-        JOptionPane.showMessageDialog(this,AlumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText())));
-                
-    }//GEN-LAST:event_JBotonActionPerformed
-
-    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDniActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       JOptionPane.showMessageDialog(this,AlumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText())));
+            
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
@@ -106,7 +97,7 @@ public class BuscarAlumnos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBoton;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtDni;
