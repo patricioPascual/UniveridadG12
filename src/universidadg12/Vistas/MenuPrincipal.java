@@ -6,6 +6,7 @@ package universidadg12.Vistas;
 
 import universidadg12.Persistencia.AlumnoData;
 import universidadg12.Persistencia.Conexion;
+import universidadg12.Persistencia.MateriaData;
 
 /**
  *
@@ -14,6 +15,7 @@ import universidadg12.Persistencia.Conexion;
 public class MenuPrincipal extends javax.swing.JFrame {
     private Conexion miConexion;
     private AlumnoData alumnoData;
+    private MateriaData materiaData;
     /**
      * Creates new form MenuPrincipal
      */
@@ -21,6 +23,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
         this.miConexion= new Conexion("jdbc:mariadb://localhost:3306/universidadg12","root","");
         this.alumnoData = new AlumnoData(miConexion);
+        this.materiaData=new MateriaData(miConexion);
     }
 
     /**
@@ -96,6 +99,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mnuMateria.setText("Materia");
 
         mniGestionarMateria.setText("Gestionar Materia");
+        mniGestionarMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniGestionarMateriaActionPerformed(evt);
+            }
+        });
         mnuMateria.add(mniGestionarMateria);
 
         jMenuBar1.add(mnuMateria);
@@ -143,6 +151,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void mniSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSalirActionPerformed
         dispose();
     }//GEN-LAST:event_mniSalirActionPerformed
+
+    private void mniGestionarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniGestionarMateriaActionPerformed
+        GestorMaterias gestorMat= new GestorMaterias();
+        escritorio.add(gestorMat); 
+        gestorMat.setVisible(true);
+    }//GEN-LAST:event_mniGestionarMateriaActionPerformed
 
     /**
      * @param args the command line arguments
