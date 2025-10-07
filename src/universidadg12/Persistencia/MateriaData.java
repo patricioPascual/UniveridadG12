@@ -1,4 +1,3 @@
-
 package universidadg12.Persistencia;
 
 import java.sql.Connection;
@@ -17,18 +16,17 @@ import universidadg12.Model.Materia;
  * @author Leandro
  */
 public class MateriaData {
- 
+
     private static Connection con;
 
     public MateriaData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }
-    
-    
-     public static void guardarMateria(Materia m) {
-        String query = "INSERT INTO materia(nombre,anio,estado) VALUES (?,?,?) ";
+
+    public static void guardarMateria(Materia m) {
+        String query = "INSERT INTO materia(nombre, anio, estado) VALUES (?,?,?) ";
         try {
-            PreparedStatement ps= con.prepareStatement(query);
+            PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, (m.getNombre()));
             ps.setInt(2, m.getAnio());
             ps.setBoolean(3, m.isEstado());
@@ -41,7 +39,24 @@ public class MateriaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar Materia");
         }
-
     }
-    
+
+    public static void modificarMateria(Materia m) {
+        String query = "UPDATE materia SET nombre = ?, anio = ? WHERE id_materia = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, (m.getNombre()));
+            ps.setInt(2, m.getAnio());
+            ps.setInt(3, m.getId_materia());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Materia modificada con exito");
+            }
+
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar Materia");
+        }
+    }
+
 }
