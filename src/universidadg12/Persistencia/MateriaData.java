@@ -42,20 +42,21 @@ public class MateriaData {
     }
 
     public static void modificarMateria(Materia m) {
-        String query = "UPDATE materia SET nombre = ?, anio = ? WHERE id_materia = ?";
+        String query = "UPDATE materia SET nombre = ?, anio = ? WHERE nombre = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, (m.getNombre()));
             ps.setInt(2, m.getAnio());
-            ps.setInt(3, m.getId_materia());
+            ps.setString(3, m.getNombre());
             int exito = ps.executeUpdate();
+            System.out.println("EXITO");
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Materia modificada con exito");
             }
 
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar Materia");
+            JOptionPane.showMessageDialog(null, "Error al Modifacar Materia o Nombre ya existente");
         }
     }
 

@@ -86,8 +86,30 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
             new String [] {
                 "Código", "Nombre", "Año"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblMaterias.setColumnSelectionAllowed(true);
+        tblMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMateriasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMaterias);
+        tblMaterias.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         Actualizar.setText("Modificar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -226,9 +248,14 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        String nombre = txtNombreMat.getText();
-        int anio = Integer.parseInt(txtBuscarCodigo.getText());
 
+        
+        String nombre = txtNombreMat.getText();
+        int anio = Integer.parseInt(txtAnioMat.getText());
+       boolean estado= true;
+      Materia materia =new Materia(nombre, anio, estado);
+      MateriaData.modificarMateria(materia);
+        System.out.println(materia.toString());
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void txtAnioMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioMatActionPerformed
@@ -252,6 +279,16 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     private void btnMostrarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarMateriasActionPerformed
 
     }//GEN-LAST:event_btnMostrarMateriasActionPerformed
+
+    private void tblMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMateriasMouseClicked
+       int fila= tblMaterias.rowAtPoint(evt.getPoint());
+        
+        String nombre= tblMaterias.getValueAt(fila, 1).toString();
+        String anio= tblMaterias.getValueAt(fila, 2).toString();
+        txtNombreMat.setText(nombre);
+        txtAnioMat.setText(anio);
+        
+    }//GEN-LAST:event_tblMateriasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
