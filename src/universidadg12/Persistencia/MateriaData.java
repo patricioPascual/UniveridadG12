@@ -59,4 +59,30 @@ public class MateriaData {
         }
     }
 
+    public static Materia buscarMateria(int id_materia) {
+        
+
+        Materia materia = null;
+        try {
+            String query = "SELECT id_materia, nombre, anio FROM materia WHERE id_materia = ? ";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, id_materia);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    materia = new Materia();
+                    materia.setId_materia(id_materia);
+                    materia.setNombre(rs.getString("nombre"));
+                    materia.setAnio(rs.getInt("anio"));
+                    ps.close();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Materia no encontrado");
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
+        }
+
+        return materia;
+    }
 }

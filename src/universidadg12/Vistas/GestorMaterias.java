@@ -4,6 +4,7 @@
  */
 package universidadg12.Vistas;
 
+import javax.swing.table.DefaultTableModel;
 import universidadg12.Model.Materia;
 import universidadg12.Persistencia.MateriaData;
 
@@ -13,9 +14,6 @@ import universidadg12.Persistencia.MateriaData;
  */
 public class GestorMaterias extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form GestorMarterias
-     */
     public GestorMaterias() {
         initComponents();
     }
@@ -38,12 +36,12 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
         ComboEstadoMat = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblMaterias = new javax.swing.JTable();
         Actualizar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        txtAnioMat1 = new javax.swing.JTextField();
+        btnMostrarMaterias = new javax.swing.JButton();
+        txtAnioMat = new javax.swing.JTextField();
         lblCodigo = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
 
@@ -78,7 +76,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -89,7 +87,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                 "Código", "Nombre", "Año"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblMaterias);
 
         Actualizar.setText("Modificar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,11 +100,16 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
 
         jButton3.setText("Baja/Alta");
 
-        jButton4.setText("Mostrar Todas");
-
-        txtAnioMat1.addActionListener(new java.awt.event.ActionListener() {
+        btnMostrarMaterias.setText("Mostrar Todas");
+        btnMostrarMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAnioMat1ActionPerformed(evt);
+                btnMostrarMateriasActionPerformed(evt);
+            }
+        });
+
+        txtAnioMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnioMatActionPerformed(evt);
             }
         });
 
@@ -135,7 +138,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombreMat, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAnioMat1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAnioMat, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboEstadoMat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -159,7 +162,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                                 .addGap(226, 226, 226)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(btnMostrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap(12, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -179,7 +182,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(txtAnioMat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAnioMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
@@ -187,7 +190,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(btnMostrarMaterias)
                     .addComponent(ComboEstadoMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
@@ -200,7 +203,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
 
     private void btnGuardarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMatActionPerformed
         String nombre = txtNombreMat.getText();
-        int anio = Integer.parseInt(txtBuscarCodigo.getText());
+        int anio = Integer.parseInt(txtAnioMat.getText());
         String estado = ComboEstadoMat.getSelectedItem().toString();
         boolean estadob;
         if (estado.equalsIgnoreCase("activa")) {
@@ -214,7 +217,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarMatActionPerformed
 
     private void txtBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarCodigoActionPerformed
-    
+
     }//GEN-LAST:event_txtBuscarCodigoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -225,16 +228,30 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         String nombre = txtNombreMat.getText();
         int anio = Integer.parseInt(txtBuscarCodigo.getText());
-        
+
     }//GEN-LAST:event_ActualizarActionPerformed
 
-    private void txtAnioMat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioMat1ActionPerformed
+    private void txtAnioMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioMatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAnioMat1ActionPerformed
+    }//GEN-LAST:event_txtAnioMatActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-    
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel = (DefaultTableModel) tblMaterias.getModel();
+        tableModel.setRowCount(0);
+
+        Materia materia = MateriaData.buscarMateria(Integer.parseInt(txtBuscarCodigo.getText()));
+        int codigo = materia.getId_materia();
+        String nombre = materia.getNombre();
+        int anio = materia.getAnio();
+
+        String[] row = {String.valueOf(codigo), nombre, String.valueOf(anio)};
+        tableModel.addRow(row);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnMostrarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarMateriasActionPerformed
+
+    }//GEN-LAST:event_btnMostrarMateriasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,17 +259,17 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> ComboEstadoMat;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardarMat;
+    private javax.swing.JButton btnMostrarMaterias;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JTextField txtAnioMat1;
+    private javax.swing.JTable tblMaterias;
+    private javax.swing.JTextField txtAnioMat;
     private javax.swing.JTextField txtBuscarCodigo;
     private javax.swing.JTextField txtNombreMat;
     // End of variables declaration//GEN-END:variables
