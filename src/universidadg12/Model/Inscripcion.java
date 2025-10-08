@@ -10,7 +10,7 @@ package universidadg12.Model;
  */
 public class Inscripcion {
     private int  id_inscripto;
-    private int nota;
+    private double nota;
     private Alumno alumno;
     private Materia materia;
 
@@ -38,11 +38,11 @@ public class Inscripcion {
         this.id_inscripto = id_inscripto;
     }
 
-    public int getNota() {
+    public double getNota() {
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(double nota) {
         this.nota = nota;
     }
 

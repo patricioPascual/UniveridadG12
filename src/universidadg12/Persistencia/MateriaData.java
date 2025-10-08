@@ -19,6 +19,9 @@ public class MateriaData {
 
     private static Connection con;
 
+    public MateriaData() {
+    }
+    
     public MateriaData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }

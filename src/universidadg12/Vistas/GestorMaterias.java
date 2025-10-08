@@ -34,12 +34,11 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
         txtBuscarCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         ComboEstadoMat = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMaterias = new javax.swing.JTable();
         Actualizar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAlta = new javax.swing.JButton();
         btnMostrarMaterias = new javax.swing.JButton();
         txtAnioMat = new javax.swing.JTextField();
         lblCodigo = new javax.swing.JLabel();
@@ -58,21 +57,15 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        txtBuscarCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarCodigoActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         jLabel3.setText("Estado");
 
         ComboEstadoMat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activa", "Inactiva" }));
 
-        jButton1.setText("Salir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -118,20 +111,12 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Borrar");
-
-        jButton3.setText("Baja/Alta");
+        btnAlta.setText("Baja/Alta");
 
         btnMostrarMaterias.setText("Mostrar Todas");
         btnMostrarMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMostrarMateriasActionPerformed(evt);
-            }
-        });
-
-        txtAnioMat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAnioMatActionPerformed(evt);
             }
         });
 
@@ -168,24 +153,24 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnGuardarMat)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(Actualizar)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(226, 226, 226)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnMostrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(226, 226, 226)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnMostrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addContainerGap(12, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardarMat)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Actualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalir)
+                                .addGap(21, 21, 21))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,10 +178,9 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarMat)
-                    .addComponent(jButton1)
+                    .addComponent(btnSalir)
                     .addComponent(Actualizar)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnAlta))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -232,35 +216,24 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
             estadob = true;
         } else {
             estadob = false;
-
         }
         Materia materia = new Materia(nombre, anio, estadob);
         MateriaData.guardarMateria(materia);
     }//GEN-LAST:event_btnGuardarMatActionPerformed
 
-    private void txtBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarCodigoActionPerformed
-
-    }//GEN-LAST:event_txtBuscarCodigoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
 
-        
         String nombre = txtNombreMat.getText();
         int anio = Integer.parseInt(txtAnioMat.getText());
-       boolean estado= true;
-      Materia materia =new Materia(nombre, anio, estado);
-      MateriaData.modificarMateria(materia);
+        boolean estado = true;
+        Materia materia = new Materia(nombre, anio, estado);
+        MateriaData.modificarMateria(materia);
         System.out.println(materia.toString());
     }//GEN-LAST:event_ActualizarActionPerformed
-
-    private void txtAnioMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioMatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAnioMatActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -281,25 +254,24 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnMostrarMateriasActionPerformed
 
     private void tblMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMateriasMouseClicked
-       int fila= tblMaterias.rowAtPoint(evt.getPoint());
-        
-        String nombre= tblMaterias.getValueAt(fila, 1).toString();
-        String anio= tblMaterias.getValueAt(fila, 2).toString();
+        int fila = tblMaterias.rowAtPoint(evt.getPoint());
+
+        String nombre = tblMaterias.getValueAt(fila, 1).toString();
+        String anio = tblMaterias.getValueAt(fila, 2).toString();
         txtNombreMat.setText(nombre);
         txtAnioMat.setText(anio);
-        
+
     }//GEN-LAST:event_tblMateriasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JComboBox<String> ComboEstadoMat;
+    private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardarMat;
     private javax.swing.JButton btnMostrarMaterias;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
