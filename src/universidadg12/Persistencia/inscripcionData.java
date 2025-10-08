@@ -12,11 +12,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class inscripcionData {
+public class InscripcionData {
 
     private static Connection con;
 
-    public inscripcionData(Conexion miConexion) {
+    public InscripcionData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }
 

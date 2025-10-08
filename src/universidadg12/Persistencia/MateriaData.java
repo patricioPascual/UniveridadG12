@@ -52,7 +52,7 @@ public class MateriaData {
             ps.setInt(2, m.getAnio());
             ps.setString(3, m.getNombre());
             int exito = ps.executeUpdate();
-            System.out.println("EXITO");
+            
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Materia modificada con exito");
             }
@@ -89,4 +89,6 @@ public class MateriaData {
 
         return materia;
     }
+    
+    
 }

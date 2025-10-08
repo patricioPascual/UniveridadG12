@@ -22,6 +22,9 @@ public class AlumnoData {
 
     private static Connection con;
 
+    public AlumnoData() {
+    }
+    
     public AlumnoData(Conexion miConexion) {
         con = miConexion.buscarConexion();
     }
