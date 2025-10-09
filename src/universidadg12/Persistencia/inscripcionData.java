@@ -56,7 +56,7 @@ public class InscripcionData {
                 insc.setId_inscripto(rs.getInt("id_inscripcion"));
                 insc.setNota(rs.getDouble("nota"));
                 insc.setAlumno(ad.buscarAlumnos(rs.getInt("id_alumno")));
-                insc.setMateria(md.buscarMateria(rs.getInt("id_materia")));
+                insc.setMateria(md.buscarMateria(rs.getString("nombre")));
 
                 inscripciones.add(insc);
             }
@@ -84,7 +84,7 @@ public class InscripcionData {
                 insc.setId_inscripto(rs.getInt("id_inscripcion"));
                 insc.setNota(rs.getDouble("nota"));
                 insc.setAlumno(ad.buscarAlumnos(id_alumno));
-                insc.setMateria(md.buscarMateria(rs.getInt("id_materia")));
+                insc.setMateria(md.buscarMateria(rs.getString("nombre")));
 
                 inscripciones.add(insc);
             }

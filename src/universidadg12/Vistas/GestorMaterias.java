@@ -4,6 +4,8 @@
  */
 package universidadg12.Vistas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadg12.Model.Materia;
 import universidadg12.Persistencia.MateriaData;
@@ -112,6 +114,11 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
         });
 
         btnAlta.setText("Baja/Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
 
         btnMostrarMaterias.setText("Mostrar Todas");
         btnMostrarMaterias.addActionListener(new java.awt.event.ActionListener() {
@@ -143,11 +150,13 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                             .addComponent(lblCodigo)
                             .addComponent(jLabel1))
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreMat, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAnioMat, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboEstadoMat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ComboEstadoMat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreMat, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(txtAnioMat)
+                            .addComponent(txtBuscarCodigo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -158,9 +167,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(226, 226, 226)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnMostrarMaterias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(btnMostrarMaterias)))
                                 .addContainerGap(12, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGuardarMat)
@@ -184,17 +191,17 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombreMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(txtNombreMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(txtAnioMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
-                    .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMostrarMaterias)
                     .addComponent(ComboEstadoMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,32 +243,77 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel = (DefaultTableModel) tblMaterias.getModel();
         tableModel.setRowCount(0);
+        try {
+            Materia materia = MateriaData.buscarMateria(txtNombreMat.getText());
+            
+            int codigo = materia.getId_materia();
+            String nombre = materia.getNombre();
+            int anio = materia.getAnio();
 
-        Materia materia = MateriaData.buscarMateria(Integer.parseInt(txtBuscarCodigo.getText()));
-        int codigo = materia.getId_materia();
-        String nombre = materia.getNombre();
-        int anio = materia.getAnio();
-
-        String[] row = {String.valueOf(codigo), nombre, String.valueOf(anio)};
-        tableModel.addRow(row);
+            String[] row = {String.valueOf(codigo), nombre, String.valueOf(anio)};
+            tableModel.addRow(row);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Materia no encontrada, verifique el nombre");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnMostrarMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarMateriasActionPerformed
-
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel = (DefaultTableModel) tblMaterias.getModel();
+        tableModel.setRowCount(0);
+        ArrayList <Materia>listado = MateriaData.mostrarMaterias(); 
+        
+        for (Materia m: listado) {
+            int codigo = m.getId_materia();
+            String nombre = m.getNombre();
+            int anio = m.getAnio();
+            String[] row = {String.valueOf(codigo), nombre, String.valueOf(anio)};
+            tableModel.addRow(row);
+        }    
     }//GEN-LAST:event_btnMostrarMateriasActionPerformed
 
     private void tblMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMateriasMouseClicked
+
+        Materia materia = MateriaData.buscarMateria(txtNombreMat.getText());
         int fila = tblMaterias.rowAtPoint(evt.getPoint());
 
         String nombre = tblMaterias.getValueAt(fila, 1).toString();
         String anio = tblMaterias.getValueAt(fila, 2).toString();
         txtNombreMat.setText(nombre);
         txtAnioMat.setText(anio);
-
+        txtBuscarCodigo.setText(String.valueOf(materia.getId_materia()));
+        if (materia.isEstado() == true) {
+            ComboEstadoMat.setSelectedIndex(0);
+        } else {
+            ComboEstadoMat.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_tblMateriasMouseClicked
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        String nombre = txtNombreMat.getText();
+        int anio = Integer.parseInt(txtAnioMat.getText());
+        String estado = ComboEstadoMat.getSelectedItem().toString();
+        boolean estadob;
+        if (estado.equalsIgnoreCase("activa")) {
+            estadob = true;
+        } else {
+            estadob = false;
+        }
+        Materia materia = new Materia(nombre, anio, estadob);
+
+        if (materia.isEstado() == true) {
+            MateriaData.bajaMateria(materia);
+            ComboEstadoMat.setSelectedIndex(1);
+        } else {
+            MateriaData.altaMateria(materia);
+            ComboEstadoMat.setSelectedIndex(0);
+        }
+        
+    }//GEN-LAST:event_btnAltaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
 import universidadg12.Model.Materia;
 
@@ -21,7 +24,7 @@ public class MateriaData {
 
     public MateriaData() {
     }
-    
+
     public MateriaData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }
@@ -52,7 +55,7 @@ public class MateriaData {
             ps.setInt(2, m.getAnio());
             ps.setString(3, m.getNombre());
             int exito = ps.executeUpdate();
-            
+
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Materia modificada con exito");
             }
@@ -63,32 +66,96 @@ public class MateriaData {
         }
     }
 
-    public static Materia buscarMateria(int id_materia) {
-        
-
+    public static Materia buscarMateria(String nombre) {
         Materia materia = null;
         try {
-            String query = "SELECT id_materia, nombre, anio FROM materia WHERE id_materia = ? ";
-            try (PreparedStatement ps = con.prepareStatement(query)) {
-                ps.setInt(1, id_materia);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    materia = new Materia();
-                    materia.setId_materia(id_materia);
-                    materia.setNombre(rs.getString("nombre"));
-                    materia.setAnio(rs.getInt("anio"));
-                    ps.close();
-                    
+            String query = "SELECT * FROM materia WHERE nombre LIKE ? ";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setId_materia(rs.getInt("id_materia"));
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Materia no encontrado");
+                    estado = false;
                 }
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("anio"));
+                materia.setEstado(estado);
+
+                ps.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Materia no encontrado");
             }
-        } catch (SQLException ex) {
+
+        } catch (SQLException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
         }
-
+        System.out.println(materia);
         return materia;
     }
-    
+
+    public static void altaMateria(Materia m) {
+        try {
+            String query = "UPDATE materia SET estado = 1 WHERE nombre = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, m.getNombre());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificacion: Alta confirmada.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+    }
+
+    public static void bajaMateria(Materia m) {
+        try {
+            String query = "UPDATE materia SET estado = 0 WHERE nombre = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, m.getNombre());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificacion: Baja confirmada.");
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+    }
+
+    public static ArrayList mostrarMaterias() {
+        ArrayList <Materia> listado = new ArrayList();
+        try {
+            String query = "SELECT * FROM materia";  
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+              Materia materia = new Materia();  
+              materia.setId_materia(rs.getInt("id_materia"));
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
+                } else {
+                    estado = false;
+                }
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("anio"));
+                materia.setEstado(estado);
+                listado.add(materia);
+            }
+                
+        } catch (SQLException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+        
+        return listado;
+    }
     
 }

@@ -10,9 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import universidadg12.Model.Materia;
 
 /**
  *
@@ -24,7 +26,7 @@ public class AlumnoData {
 
     public AlumnoData() {
     }
-    
+
     public AlumnoData(Conexion miConexion) {
         con = miConexion.buscarConexion();
     }
@@ -61,7 +63,6 @@ public class AlumnoData {
             if (rs.next()) {
                 alumno = new Alumno();
                 alumno.setId_alumno(rs.getInt("id_alumno"));
-
                 alumno.setDni(dni);
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
@@ -108,13 +109,13 @@ public class AlumnoData {
         }
 
     }
-    
+
     //Baja logica establece el estado en falso o 0
     public static void darBajaAlumno(int dni) {
-    
+
         try {
-            String sql= "UPDATE  alumno SET  estado = 0 WHERE dni = ?";
-            
+            String sql = "UPDATE  alumno SET  estado = 0 WHERE dni = ?";
+
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             int exito = ps.executeUpdate();
@@ -125,12 +126,12 @@ public class AlumnoData {
             JOptionPane.showMessageDialog(null, "Error al Accer a la Base de datos");
         }
     }
-    
+
     public static void darAltaAlumno(int dni) {
-    
+
         try {
-            String sql= "UPDATE  alumno SET  estado = 1 WHERE dni = ?";
-            
+            String sql = "UPDATE  alumno SET  estado = 1 WHERE dni = ?";
+
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             int exito = ps.executeUpdate();
@@ -141,6 +142,36 @@ public class AlumnoData {
             JOptionPane.showMessageDialog(null, "Error al Accer a la Base de datos");
         }
     }
-    
-    
+
+    public static ArrayList listarAlumnos() {
+        ArrayList<Alumno> listado = new ArrayList();
+        try {
+            String query = "SELECT * FROM alumno";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Alumno alumno = new Alumno();
+                alumno.setId_alumno(rs.getInt("id_alumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
+                } else {
+                    estado = false;
+                }
+                alumno.setEstado(estado);
+                listado.add(alumno);
+                ps.close();
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la base de datos");
+        }
+
+        return listado;
+    }
 }

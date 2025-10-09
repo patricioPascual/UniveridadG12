@@ -86,7 +86,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         mnuAlumno.add(mniGestorAlumno);
 
-        jMenuItem1.setText("Buscar Alumno");
+        jMenuItem1.setText("Lista Alumnos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -143,7 +143,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mniGestorAlumnoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        BuscarAlumnos buscarAlumnos = new BuscarAlumnos();
+        ListaAlumnos buscarAlumnos = new ListaAlumnos();
         escritorio.add(buscarAlumnos);
         buscarAlumnos.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
