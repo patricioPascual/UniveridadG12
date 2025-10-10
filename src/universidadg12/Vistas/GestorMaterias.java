@@ -280,7 +280,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
 
         Materia materia = MateriaData.buscarMateria(txtNombreMat.getText());
         int fila = tblMaterias.rowAtPoint(evt.getPoint());
-
+     try{
         String nombre = tblMaterias.getValueAt(fila, 1).toString();
         String anio = tblMaterias.getValueAt(fila, 2).toString();
         txtNombreMat.setText(nombre);
@@ -291,6 +291,9 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
         } else {
             ComboEstadoMat.setSelectedIndex(1);
         }
+     }catch(NullPointerException e){
+         JOptionPane.showMessageDialog(this, "ERROR AL BUSCAR MATERIA");
+     }
     }//GEN-LAST:event_tblMateriasMouseClicked
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
