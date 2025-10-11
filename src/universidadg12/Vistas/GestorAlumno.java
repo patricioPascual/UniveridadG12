@@ -8,6 +8,7 @@ import universidadg12.Model.Alumno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.sql.Date;
+import javax.swing.JOptionPane;
 import universidadg12.Persistencia.AlumnoData;
 
 /**
@@ -124,19 +125,18 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel1)
                             .addComponent(btnRegistrar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnModificar)
-                                .addGap(28, 28, 28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dtcFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dtcFechaNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDni)
@@ -148,15 +148,15 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtDni)
                                 .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnSalir))
+                            .addComponent(btnAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSalir))
+                    .addComponent(btnBuscar))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,29 +210,97 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void limpiarCampos(){
+    private boolean validarCampos() {
+
+        String dni = txtDni.getText().trim();
+        if (txtDni.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo 'DNI' no debe estar vacio.");
+        } else if (!dni.matches("^[0-9]{8}$")) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener 8 digitos.");
+            return false;
+        }
+
+        String letrasRegex = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$";
+        if (txtApellido.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo 'Apellido' no debe estar vacio.");
+        } else if (!txtApellido.getText().trim().matches(letrasRegex)) {
+            JOptionPane.showMessageDialog(this, "Apellido invalido. Solo debe contener letras");
+            return false;
+        }
+
+        if (txtNombre.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' no debe estar vacio.");
+        } else if (!txtNombre.getText().trim().matches(letrasRegex)) {
+            JOptionPane.showMessageDialog(this, "Nombre invalido. Solo debe contener letras");
+            return false;
+        }
+
+        java.util.Date fechaNac = dtcFechaNac.getDate();
+        if (fechaNac == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
+            return false;
+        }
+
+        LocalDate fecha = fechaNac.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate hoy = LocalDate.now();
+        LocalDate hace150Años = hoy.minusYears(150);
+
+        if (fecha.isAfter(hoy)) {
+            JOptionPane.showMessageDialog(this, "No se permiten fechas futuras.");
+            return false;
+        }
+
+        if (fecha.isBefore(hace150Años)) {
+            JOptionPane.showMessageDialog(this, "La fecha no puede tener mas de 150 años.");
+            return false;
+        }
+
+        if (cmbEstado.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(this, "El combo 'Estado' debe ser 'Activa'.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean validarDni() {
+
+        String dni = txtDni.getText().trim();
+        if (txtDni.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo 'DNI' no debe estar vacio.");
+        } else if (!dni.matches("^[0-9]{8}$")) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe contener 8 digitos.");
+            return false;
+        }
+        return true;
+    }
+
+    public void limpiarCampos() {
+        
         txtApellido.setText("");
         txtNombre.setText("");
         txtDni.setText("");
-        dtcFechaNac.setDateFormatString("");
+        dtcFechaNac.setDate(null);
     }
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        int dni = Integer.parseInt(txtDni.getText());
-        String apellido = txtApellido.getText();
-        String nombre = txtNombre.getText();        
-        String estadotxt = cmbEstado.getSelectedItem().toString();
-        LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        boolean estado;
-        if (estadotxt.equalsIgnoreCase("Activo")) {
-            estado = true;
-        } else {
-            estado = false;
+
+        if (validarCampos()) {
+            int dni = Integer.parseInt(txtDni.getText());
+            String apellido = txtApellido.getText();
+            String nombre = txtNombre.getText();
+            String estadotxt = cmbEstado.getSelectedItem().toString();
+            LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean estado;
+            if (estadotxt.equalsIgnoreCase("Activo")) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
+            AlumnoData.guardarAlumno(alumno);
         }
-        
-        Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac, estado);
-        AlumnoData.guardarAlumno(alumno);
-        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -241,37 +309,47 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        int dni = Integer.parseInt(txtDni.getText());
-        String apellido = txtApellido.getText();
-        String nombre = txtNombre.getText();
-        //String estadotxt = cmbEstado.getSelectedItem().toString();
-        LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac);
-        AlumnoData.modificarAlumno(alumno);
-
+        if (validarCampos()) {
+            int dni = Integer.parseInt(txtDni.getText());
+            String apellido = txtApellido.getText();
+            String nombre = txtNombre.getText();
+            LocalDate fechaNac = dtcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            Alumno alumno = new Alumno(dni, apellido, nombre, fechaNac);
+            AlumnoData.modificarAlumno(alumno);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        AlumnoData.darBajaAlumno(Integer.parseInt(txtDni.getText()));
+
+        if (validarDni()) {
+            AlumnoData.darBajaAlumno(Integer.parseInt(txtDni.getText()));
+        }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Alumno a = AlumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
-        txtDni.setText(String.valueOf(a.getDni()));
-        txtNombre.setText(a.getNombre());
-        txtApellido.setText(a.getApellido());
-        dtcFechaNac.setDate(Date.valueOf(a.getFechaNacimiento()));
-        boolean estado = a.isEstado();
-        System.out.println(estado);
-        if (estado == true) {
-            cmbEstado.setSelectedIndex(0);
-        } else {
-            cmbEstado.setSelectedIndex(1);
+
+        if (validarDni()) {
+            Alumno a = AlumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
+
+            txtDni.setText(String.valueOf(a.getDni()));
+            txtNombre.setText(a.getNombre());
+            txtApellido.setText(a.getApellido());
+            dtcFechaNac.setDate(Date.valueOf(a.getFechaNacimiento()));
+            boolean estado = a.isEstado();
+            System.out.println(estado);
+            if (estado == true) {
+                cmbEstado.setSelectedIndex(0);
+            } else {
+                cmbEstado.setSelectedIndex(1);
+            }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        AlumnoData.darAltaAlumno(Integer.parseInt(txtDni.getText()));
+
+        if (validarDni()) {
+            AlumnoData.darAltaAlumno(Integer.parseInt(txtDni.getText()));
+        }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -95,7 +95,6 @@ public class MateriaData {
         } catch (SQLException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
         }
-        System.out.println(materia);
         return materia;
     }
 
