@@ -6,6 +6,7 @@ package universidadg12.Vistas;
 
 import universidadg12.Persistencia.AlumnoData;
 import universidadg12.Persistencia.Conexion;
+import universidadg12.Persistencia.InscripcionData;
 import universidadg12.Persistencia.MateriaData;
 
 /**
@@ -16,6 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private Conexion miConexion;
     private AlumnoData alumnoData;
     private MateriaData materiaData;
+    private InscripcionData incripcionData;
     /**
      * Creates new form MenuPrincipal
      */
@@ -24,6 +26,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.miConexion= new Conexion("jdbc:mariadb://localhost:3306/universidadg12","root","");
         this.alumnoData = new AlumnoData(miConexion);
         this.materiaData=new MateriaData(miConexion);
+        this.incripcionData= new InscripcionData(miConexion);
     }
 
     /**
@@ -42,6 +45,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuInscripcion = new javax.swing.JMenu();
         mniFormInscripcion = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuAlumno = new javax.swing.JMenu();
         mniGestorAlumno = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -72,7 +76,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mnuInscripcion.setText("Inscripcion");
 
         mniFormInscripcion.setText("Formulario Inscripcion");
+        mniFormInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniFormInscripcionActionPerformed(evt);
+            }
+        });
         mnuInscripcion.add(mniFormInscripcion);
+
+        jMenuItem2.setText("Cargar Notas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        mnuInscripcion.add(jMenuItem2);
 
         jMenuBar1.add(mnuInscripcion);
 
@@ -158,6 +175,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
         gestorMat.setVisible(true);
     }//GEN-LAST:event_mniGestionarMateriaActionPerformed
 
+    private void mniFormInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFormInscripcionActionPerformed
+        GestorInscripcion gestorInsc= new GestorInscripcion();
+        escritorio.add(gestorInsc);
+        gestorInsc.setVisible(true);
+    }//GEN-LAST:event_mniFormInscripcionActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        CargarNotas cargarNotas= new CargarNotas();
+        escritorio.add(cargarNotas);
+        cargarNotas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -200,6 +229,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem mniFormInscripcion;
     private javax.swing.JMenuItem mniGestionarMateria;
     private javax.swing.JMenuItem mniGestorAlumno;

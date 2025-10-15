@@ -66,7 +66,7 @@ public class MateriaData {
         }
     }
 
-    public static Materia buscarMateria(String nombre) {
+    public  Materia buscarMateria(String nombre) {
         Materia materia = null;
         try {
             String query = "SELECT * FROM materia WHERE nombre LIKE ? ";
@@ -128,7 +128,7 @@ public class MateriaData {
         }
     }
 
-    public static ArrayList mostrarMaterias() {
+    public  ArrayList mostrarMaterias() {
         ArrayList <Materia> listado = new ArrayList();
         try {
             String query = "SELECT * FROM materia";  
@@ -157,4 +157,36 @@ public class MateriaData {
         return listado;
     }
     
+    public static Materia buscarMateriaPorID(int id) {
+        Materia materia = null;
+        try {
+            String query = "SELECT * FROM materia WHERE id_materia = ? ";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setId_materia(rs.getInt("id_materia"));
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
+                } else {
+                    estado = false;
+                }
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("anio"));
+                materia.setEstado(estado);
+
+                ps.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Materia no encontrado");
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
+        }
+        return materia;
+    }
+
 }

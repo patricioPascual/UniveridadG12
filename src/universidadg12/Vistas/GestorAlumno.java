@@ -327,9 +327,9 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+         AlumnoData alumnoData= new AlumnoData();
         if (validarDni()) {
-            Alumno a = AlumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
+            Alumno a = alumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
 
             txtDni.setText(String.valueOf(a.getDni()));
             txtNombre.setText(a.getNombre());

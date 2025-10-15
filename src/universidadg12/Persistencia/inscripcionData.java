@@ -19,6 +19,9 @@ public class InscripcionData {
     public InscripcionData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }
+    public InscripcionData(){
+}
+    
 
     public void guardarInscripcion(Inscripcion inscripcion) {
         String sql = "INSERT INTO inscripcion (nota, id_alumno, id_materia) VALUES (?, ?, ?)";
@@ -53,10 +56,10 @@ public class InscripcionData {
                 AlumnoData ad = new AlumnoData();
                 MateriaData md = new MateriaData();
 
-                insc.setId_inscripto(rs.getInt("id_inscripcion"));
+                insc.setId_inscripto(rs.getInt("id_inscripto"));
                 insc.setNota(rs.getDouble("nota"));
-                insc.setAlumno(ad.buscarAlumnos(rs.getInt("id_alumno")));
-                insc.setMateria(md.buscarMateria(rs.getString("nombre")));
+                insc.setAlumno(ad.buscarAlumnosPorID(rs.getInt("id_alumno")));
+                insc.setMateria(md.buscarMateriaPorID(rs.getInt("id_materia")));
 
                 inscripciones.add(insc);
             }
@@ -81,10 +84,10 @@ public class InscripcionData {
 
             while (rs.next()) {
                 Inscripcion insc = new Inscripcion();
-                insc.setId_inscripto(rs.getInt("id_inscripcion"));
+                insc.setId_inscripto(rs.getInt("id_inscripto"));
                 insc.setNota(rs.getDouble("nota"));
-                insc.setAlumno(ad.buscarAlumnos(id_alumno));
-                insc.setMateria(md.buscarMateria(rs.getString("nombre")));
+                insc.setAlumno(ad.buscarAlumnosPorID(id_alumno));
+                insc.setMateria(md.buscarMateriaPorID(rs.getInt("id_materia")));
 
                 inscripciones.add(insc);
             }

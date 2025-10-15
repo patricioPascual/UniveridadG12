@@ -232,11 +232,11 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void listarMaterias() {
-
+         MateriaData materiaData= new MateriaData();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel = (DefaultTableModel) tblMaterias.getModel();
         tableModel.setRowCount(0);
-        ArrayList<Materia> listado = MateriaData.mostrarMaterias();
+        ArrayList<Materia> listado = materiaData.mostrarMaterias();
 
         for (Materia m : listado) {
             int codigo = m.getId_materia();
@@ -361,7 +361,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+  MateriaData materiaData= new MateriaData();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel = (DefaultTableModel) tblMaterias.getModel();
         tableModel.setRowCount(0);
@@ -375,7 +375,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "El campo 'Nombre' solo debe contener Letras.");
             }
 
-            Materia materia = MateriaData.buscarMateria(txtNombreMat.getText());
+            Materia materia = materiaData.buscarMateria(txtNombreMat.getText());
 
             int codigo = materia.getId_materia();
             String nombreValido = materia.getNombre();
@@ -394,10 +394,10 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tblMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMateriasMouseClicked
-
+      MateriaData materiaData= new MateriaData(); 
         try {
             int fila = tblMaterias.rowAtPoint(evt.getPoint());
-            Materia materia = MateriaData.buscarMateria(tblMaterias.getValueAt(fila, 1).toString());
+            Materia materia = materiaData.buscarMateria(tblMaterias.getValueAt(fila, 1).toString());
 
             String nombre = tblMaterias.getValueAt(fila, 1).toString();
             String anio = tblMaterias.getValueAt(fila, 2).toString();

@@ -52,7 +52,7 @@ public class AlumnoData {
 
     }
 
-    public static Alumno buscarAlumnos(int dni) {
+    public  Alumno buscarAlumnos(int dni) {
 
         Alumno alumno = null;
         try {
@@ -143,7 +143,7 @@ public class AlumnoData {
         }
     }
 
-    public static ArrayList listarAlumnos() {
+    public  ArrayList listarAlumnos() {
         ArrayList<Alumno> listado = new ArrayList();
         try {
             String query = "SELECT * FROM alumno";
@@ -174,4 +174,43 @@ public class AlumnoData {
 
         return listado;
     }
-}
+    
+    
+    public  Alumno buscarAlumnosPorID(int id) {
+
+        Alumno alumno = null;
+        try {
+            String sql = "SELECT * FROM alumno WHERE id_alumno=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                alumno = new Alumno();
+                alumno.setId_alumno(rs.getInt("id_alumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                int estadoInt = rs.getInt("estado");
+                boolean estado;
+                if (estadoInt == 1) {
+                    estado = true;
+                } else {
+                    estado = false;
+                }
+                alumno.setEstado(estado);
+                ps.close();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Alumno no encontrado");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error Al acceder a la Base de Datos");
+        }
+
+        return alumno;
+
+    }
+    }
+

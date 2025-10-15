@@ -111,10 +111,11 @@ public class ListaAlumnos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void listarAlumnos() {
+        AlumnoData alumnoData= new AlumnoData();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel = (DefaultTableModel) tblAlumnos.getModel();
         tableModel.setRowCount(0);
-        ArrayList<Alumno> listado = AlumnoData.listarAlumnos();
+        ArrayList<Alumno> listado = alumnoData.listarAlumnos();
 
         for (Alumno a : listado) {
 
