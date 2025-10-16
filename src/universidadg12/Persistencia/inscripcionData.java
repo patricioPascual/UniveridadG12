@@ -4,13 +4,13 @@
  */
 package universidadg12.Persistencia;
 
-
 import universidadg12.Model.Alumno;
 import universidadg12.Model.Inscripcion;
 import universidadg12.Model.Materia;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class InscripcionData {
 
@@ -19,9 +19,9 @@ public class InscripcionData {
     public InscripcionData(Conexion miConexion) {
         this.con = miConexion.buscarConexion();
     }
-    public InscripcionData(){
-}
-    
+
+    public InscripcionData() {
+    }
 
     public void guardarInscripcion(Inscripcion inscripcion) {
         String sql = "INSERT INTO inscripcion (nota, id_alumno, id_materia) VALUES (?, ?, ?)";
@@ -36,11 +36,11 @@ public class InscripcionData {
 
             if (rs.next()) {
                 inscripcion.setId_inscripto(rs.getInt(1));
-                System.out.println("Inscripción guardada con exito");
+                JOptionPane.showMessageDialog(null, "Inscripcion guardada con exito.");
             }
             rs.close();
         } catch (SQLException e) {
-            System.out.println("Error al guardar inscripcion: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al guardar inscripcion: " + e.getMessage());
         }
     }
 
@@ -48,8 +48,7 @@ public class InscripcionData {
         List<Inscripcion> inscripciones = new ArrayList<>();
 
         String sql = "SELECT * FROM inscripcion";
-        try (PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Inscripcion insc = new Inscripcion();
@@ -65,7 +64,7 @@ public class InscripcionData {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener inscripciones: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener inscripciones: " + e.getMessage());
         }
 
         return inscripciones;
@@ -93,7 +92,7 @@ public class InscripcionData {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener inscripciones del alumno: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener inscripciones del alumno: " + e.getMessage());
         }
 
         return inscripciones;
@@ -107,13 +106,13 @@ public class InscripcionData {
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("Inscripción eliminada con éxito.");
+                JOptionPane.showMessageDialog(null, "Inscripcion eliminada con exito.");
             } else {
-                System.out.println("No se encontró la inscripción para eliminar.");
+                JOptionPane.showMessageDialog(null, "No se encontro la inscripcion a eliminar.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al eliminar inscripción: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al eliminar inscripcion: " + e.getMessage());
         }
     }
 
@@ -126,11 +125,11 @@ public class InscripcionData {
 
             int filas = ps.executeUpdate();
             if (filas > 0) {
-                System.out.println("Nota actualizada correctamente.");
+                JOptionPane.showMessageDialog(null, "Nota actualizada correctamente");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar nota: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al actualizar nota: " + e.getMessage());
         }
     }
 
@@ -153,7 +152,7 @@ public class InscripcionData {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener materias cursadas: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener materias cursadas: " + e.getMessage());
         }
 
         return materias;
@@ -162,8 +161,8 @@ public class InscripcionData {
     public List<Materia> obtenerMateriasNoCursadas(int id_alumno) {
         List<Materia> materias = new ArrayList<>();
 
-        String sql = "SELECT * FROM materia WHERE idMateria NOT IN " +
-                     "(SELECT id_materia FROM inscripcion WHERE id_alumno = ?)";
+        String sql = "SELECT * FROM materia WHERE id_materia NOT IN "
+                + "(SELECT id_materia FROM inscripcion WHERE id_alumno = ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id_alumno);
             ResultSet rs = ps.executeQuery();
@@ -179,7 +178,7 @@ public class InscripcionData {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener materias no cursadas: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener materias no cursadas: " + e.getMessage());
         }
 
         return materias;
