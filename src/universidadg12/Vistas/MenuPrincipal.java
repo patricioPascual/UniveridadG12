@@ -45,6 +45,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuInscripcion = new javax.swing.JMenu();
         mniFormInscripcion = new javax.swing.JMenuItem();
+        mniForm = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         mnuAlumno = new javax.swing.JMenu();
         mniGestorAlumno = new javax.swing.JMenuItem();
@@ -82,6 +83,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mnuInscripcion.add(mniFormInscripcion);
+
+        mniForm.setText("Formulario Inscripcion 2");
+        mniForm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniFormActionPerformed(evt);
+            }
+        });
+        mnuInscripcion.add(mniForm);
 
         jMenuItem2.setText("Cargar Notas");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -187,6 +196,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cargarNotas.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void mniFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFormActionPerformed
+        GestorInscripciones vista = new GestorInscripciones();
+        escritorio.add(vista);
+        vista.setVisible(true);
+    }//GEN-LAST:event_mniFormActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -230,6 +245,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem mniForm;
     private javax.swing.JMenuItem mniFormInscripcion;
     private javax.swing.JMenuItem mniGestionarMateria;
     private javax.swing.JMenuItem mniGestorAlumno;
