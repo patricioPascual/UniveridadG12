@@ -178,7 +178,7 @@ public class CargarNotas extends javax.swing.JInternalFrame {
             int id_materia = (Integer) modelo.getValueAt(fila, 0);
             double nota = Double.parseDouble(txtNota.getText());
             double notaVer = 0;
-            if (nota >= 0 || nota <= 10) {
+            if (nota >= 0 && nota <= 10) {
                 notaVer = nota;
             } else {
                 JOptionPane.showMessageDialog(this, "Error: la Nota debe estar entre 0 y 10.");
