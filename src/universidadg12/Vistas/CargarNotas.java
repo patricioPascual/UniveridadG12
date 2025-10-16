@@ -177,15 +177,15 @@ public class CargarNotas extends javax.swing.JInternalFrame {
             int id_alumno = a.getId_alumno();
             int id_materia = (Integer) modelo.getValueAt(fila, 0);
             double nota = Double.parseDouble(txtNota.getText());
-            double notaVer = 0;
+
             if (nota >= 0 && nota <= 10) {
-                notaVer = nota;
+                double notaVer = nota;
+                insData.actualizarNota(id_alumno, id_materia, notaVer);
+                borrarFila();
+                cargarMaterias();
             } else {
                 JOptionPane.showMessageDialog(this, "Error: la Nota debe estar entre 0 y 10.");
             }
-
-            insData.actualizarNota(id_alumno, id_materia, notaVer);
-            borrarFila();
         }
     }//GEN-LAST:event_bntCargarNotaActionPerformed
 

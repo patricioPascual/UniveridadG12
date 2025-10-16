@@ -215,8 +215,8 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
         String dni = txtDni.getText().trim();
         if (txtDni.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(this, "El campo 'DNI' no debe estar vacio.");
-        } else if (!dni.matches("^[0-9]{8}$")) {
-            JOptionPane.showMessageDialog(this, "El DNI solo debe contener 8 digitos.");
+        } else if (!dni.matches("^[0-9]{7,11}$")) {
+            JOptionPane.showMessageDialog(this, "El DNI solo debe caracteres numericos y contener entre 7 y 11 digitos.");
             return false;
         }
 
@@ -276,7 +276,7 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
     }
 
     public void limpiarCampos() {
-        
+
         txtApellido.setText("");
         txtNombre.setText("");
         txtDni.setText("");
@@ -327,21 +327,25 @@ public class GestorAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-         AlumnoData alumnoData= new AlumnoData();
-        if (validarDni()) {
-            Alumno a = alumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
+        try {
+            AlumnoData alumnoData = new AlumnoData();
+            if (validarDni()) {
+                Alumno a = alumnoData.buscarAlumnos(Integer.parseInt(txtDni.getText()));
 
-            txtDni.setText(String.valueOf(a.getDni()));
-            txtNombre.setText(a.getNombre());
-            txtApellido.setText(a.getApellido());
-            dtcFechaNac.setDate(Date.valueOf(a.getFechaNacimiento()));
-            boolean estado = a.isEstado();
-            System.out.println(estado);
-            if (estado == true) {
-                cmbEstado.setSelectedIndex(0);
-            } else {
-                cmbEstado.setSelectedIndex(1);
+                txtDni.setText(String.valueOf(a.getDni()));
+                txtNombre.setText(a.getNombre());
+                txtApellido.setText(a.getApellido());
+                dtcFechaNac.setDate(Date.valueOf(a.getFechaNacimiento()));
+                boolean estado = a.isEstado();
+                System.out.println(estado);
+                if (estado == true) {
+                    cmbEstado.setSelectedIndex(0);
+                } else {
+                    cmbEstado.setSelectedIndex(1);
+                }
             }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Error: alumno no existente y/o dni incorrecto.");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

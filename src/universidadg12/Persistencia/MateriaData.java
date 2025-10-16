@@ -29,7 +29,7 @@ public class MateriaData {
         this.con = miConexion.buscarConexion();
     }
 
-    public static void guardarMateria(Materia m) {
+    public  void guardarMateria(Materia m) {
         String query = "INSERT INTO materia(nombre, anio, estado) VALUES (?,?,?) ";
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -47,12 +47,12 @@ public class MateriaData {
         }
     }
 
-    public static void modificarMateria(Materia m) {
+    public void modificarMateria(Materia m, String nombre, int anio ) { // (Materia m, String nombre, String Año)
         String query = "UPDATE materia SET nombre = ?, anio = ? WHERE nombre = ?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, (m.getNombre()));
-            ps.setInt(2, m.getAnio());
+            ps.setString(1, (nombre));
+            ps.setInt(2, anio);
             ps.setString(3, m.getNombre());
             int exito = ps.executeUpdate();
 
@@ -66,7 +66,7 @@ public class MateriaData {
         }
     }
 
-    public  Materia buscarMateria(String nombre) {
+    public Materia buscarMateria(String nombre) {
         Materia materia = null;
         try {
             String query = "SELECT * FROM materia WHERE nombre LIKE ? ";
@@ -98,7 +98,7 @@ public class MateriaData {
         return materia;
     }
 
-    public static void altaMateria(Materia m) {
+    public void altaMateria(Materia m) {
         try {
             String query = "UPDATE materia SET estado = 1 WHERE nombre = ?";
             PreparedStatement ps = con.prepareStatement(query);
@@ -113,7 +113,7 @@ public class MateriaData {
         }
     }
 
-    public static void bajaMateria(Materia m) {
+    public void bajaMateria(Materia m) {
         try {
             String query = "UPDATE materia SET estado = 0 WHERE nombre = ?";
             PreparedStatement ps = con.prepareStatement(query);
@@ -128,7 +128,7 @@ public class MateriaData {
         }
     }
 
-    public  ArrayList mostrarMaterias() {
+    public ArrayList mostrarMaterias() {
         ArrayList <Materia> listado = new ArrayList();
         try {
             String query = "SELECT * FROM materia";  
@@ -157,7 +157,7 @@ public class MateriaData {
         return listado;
     }
     
-    public static Materia buscarMateriaPorID(int id) {
+    public Materia buscarMateriaPorID(int id) {
         Materia materia = null;
         try {
             String query = "SELECT * FROM materia WHERE id_materia = ? ";
