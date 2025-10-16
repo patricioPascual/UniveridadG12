@@ -146,7 +146,7 @@ public class InscripcionData {
                 m.setId_materia(rs.getInt("id_materia"));
                 m.setNombre(rs.getString("nombre"));
                 m.setAnio(rs.getInt("anio"));
-                m.setEstado(rs.getBoolean("activo"));
+                m.setEstado(rs.getBoolean("estado"));
 
                 materias.add(m);
             }
@@ -172,7 +172,7 @@ public class InscripcionData {
                 m.setId_materia(rs.getInt("id_materia"));
                 m.setNombre(rs.getString("nombre"));
                 m.setAnio(rs.getInt("anio"));
-                m.setEstado(rs.getBoolean("activo"));
+                m.setEstado(rs.getBoolean("estado"));
 
                 materias.add(m);
             }

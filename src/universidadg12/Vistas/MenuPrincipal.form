@@ -27,17 +27,9 @@
             <Property name="text" type="java.lang.String" value="Inscripcion"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mniFormInscripcion">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Formulario Inscripcion"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniFormInscripcionActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniForm2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Formulario Inscripcion 2"/>
+                <Property name="text" type="java.lang.String" value="Inscripcion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniForm2ActionPerformed"/>
@@ -49,6 +41,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mniFormInscripcion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consultar Nota"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniFormInscripcionActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

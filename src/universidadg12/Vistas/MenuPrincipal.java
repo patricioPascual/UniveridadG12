@@ -44,9 +44,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuInscripcion = new javax.swing.JMenu();
-        mniFormInscripcion = new javax.swing.JMenuItem();
         mniForm2 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        mniFormInscripcion = new javax.swing.JMenuItem();
         mnuAlumno = new javax.swing.JMenu();
         mniGestorAlumno = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -76,15 +76,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         mnuInscripcion.setText("Inscripcion");
 
-        mniFormInscripcion.setText("Formulario Inscripcion");
-        mniFormInscripcion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniFormInscripcionActionPerformed(evt);
-            }
-        });
-        mnuInscripcion.add(mniFormInscripcion);
-
-        mniForm2.setText("Formulario Inscripcion 2");
+        mniForm2.setText("Inscripcion");
         mniForm2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniForm2ActionPerformed(evt);
@@ -99,6 +91,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         mnuInscripcion.add(jMenuItem2);
+
+        mniFormInscripcion.setText("Consultar Nota");
+        mniFormInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniFormInscripcionActionPerformed(evt);
+            }
+        });
+        mnuInscripcion.add(mniFormInscripcion);
 
         jMenuBar1.add(mnuInscripcion);
 
@@ -185,9 +185,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mniGestionarMateriaActionPerformed
 
     private void mniFormInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniFormInscripcionActionPerformed
-        GestorInscripcion gestorInsc= new GestorInscripcion();
-        escritorio.add(gestorInsc);
-        gestorInsc.setVisible(true);
+        ConsultarNota consulNota= new ConsultarNota();
+        escritorio.add(consulNota);
+        consulNota.setVisible(true);
     }//GEN-LAST:event_mniFormInscripcionActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -197,7 +197,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void mniForm2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniForm2ActionPerformed
-        GestorInscripciones vista = new GestorInscripciones();
+        GestorInscripcion vista = new GestorInscripcion();
         escritorio.add(vista);
         vista.setVisible(true);
     }//GEN-LAST:event_mniForm2ActionPerformed

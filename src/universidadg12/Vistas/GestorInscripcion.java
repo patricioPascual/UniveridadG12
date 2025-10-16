@@ -5,28 +5,37 @@
 package universidadg12.Vistas;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import universidadg12.Model.Alumno;
 import universidadg12.Model.Inscripcion;
 import universidadg12.Model.Materia;
-import universidadg12.Persistencia.AlumnoData;
-import universidadg12.Persistencia.InscripcionData;
-import universidadg12.Persistencia.MateriaData;
+import universidadg12.Persistencia.*;
 
 /**
  *
- * @author patri
+ * @author Leandro
  */
 public class GestorInscripcion extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form GestorInscripcion
-     */
+    private ArrayList<Alumno> listaA;
+    private ArrayList<Materia> listaM;
+    private DefaultTableModel modelo;
+
+    private AlumnoData aData;
+    private MateriaData mData;
+    private InscripcionData insData;
+
     public GestorInscripcion() {
         initComponents();
-        cargarCombo();
-        cargarComboMat();
-        CargarTablaInicio();
+
+        aData = new AlumnoData();
+        insData = new InscripcionData();
+        listaA = (ArrayList<Alumno>) aData.listarAlumnos();
+        modelo = new DefaultTableModel();
+
+        cargarAlumnos();
+        armarCabecera();
     }
 
     /**
@@ -38,28 +47,73 @@ public class GestorInscripcion extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rgbtnMaterias = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        ComboAlumno = new javax.swing.JComboBox<>();
-        ComboMat = new javax.swing.JComboBox<>();
-        btnInscribir = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
+        cmbAlumnos = new javax.swing.JComboBox<>();
+        rbtnInscriptas = new javax.swing.JRadioButton();
+        rbtnNoInscriptas = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaInscripcion = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        tblMaterias = new javax.swing.JTable();
+        btnInscribir = new javax.swing.JButton();
+        btnAnularInscripcion = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
-        jLabel1.setText("Formulario De Inscripcion");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Formulario de Inscripcion");
 
-        jLabel2.setText("Alumno");
+        jLabel2.setText("Alumno:");
 
-        jLabel3.setText("Materia");
+        cmbAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAlumnosActionPerformed(evt);
+            }
+        });
+
+        rgbtnMaterias.add(rbtnInscriptas);
+        rbtnInscriptas.setSelected(true);
+        rbtnInscriptas.setText("Inscriptas");
+        rbtnInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnInscriptasActionPerformed(evt);
+            }
+        });
+
+        rgbtnMaterias.add(rbtnNoInscriptas);
+        rbtnNoInscriptas.setText("No Inscriptas");
+        rbtnNoInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnNoInscriptasActionPerformed(evt);
+            }
+        });
+
+        tblMaterias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblMaterias);
 
         btnInscribir.setText("Inscribir");
+        btnInscribir.setEnabled(false);
         btnInscribir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInscribirActionPerformed(evt);
+            }
+        });
+
+        btnAnularInscripcion.setText("Anular inscripcion");
+        btnAnularInscripcion.setEnabled(false);
+        btnAnularInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularInscripcionActionPerformed(evt);
             }
         });
 
@@ -70,216 +124,186 @@ public class GestorInscripcion extends javax.swing.JInternalFrame {
             }
         });
 
-        tablaInscripcion.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Alumno", "Materia", "Nota"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablaInscripcion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaInscripcionMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tablaInscripcion);
-
-        jLabel4.setText("Al Inscribir vera el alumno y las materias en las que esta Inscripto");
-
-        jButton1.setText("Cancelar Inscripcion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(165, 165, 165)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(rbtnInscriptas)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtnNoInscriptas))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnInscribir)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnAnularInscripcion)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalir))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cmbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbtnInscriptas)
+                    .addComponent(rbtnNoInscriptas))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInscribir)
+                    .addComponent(btnAnularInscripcion)
+                    .addComponent(btnSalir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(43, 43, 43)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ComboAlumno, 0, 152, Short.MAX_VALUE)
-                                    .addComponent(ComboMat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(btnInscribir)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addGap(36, 36, 36))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(ComboAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(ComboMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(btnInscribir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir)
-                    .addComponent(jButton1))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
-        InscripcionData inscripcionData= new InscripcionData();
-        Alumno alumno= (Alumno) ComboAlumno.getSelectedItem();
-        Materia materia=(Materia) ComboMat.getSelectedItem();
-       
-        Inscripcion Inscripcion= new Inscripcion(alumno,materia);
-        
-        inscripcionData.guardarInscripcion(Inscripcion);
-        CargarTabla();
-    }//GEN-LAST:event_btnInscribirActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-      InscripcionData inscripcionData= new InscripcionData();
-      MateriaData materiaData= new MateriaData();
-      AlumnoData alumnoData= new AlumnoData();
-       Alumno alumno= (Alumno) ComboAlumno.getSelectedItem();
-        Materia materia=(Materia) ComboMat.getSelectedItem();
-        inscripcionData.borrarInscripcion(alumno.getId_alumno(), materia.getId_materia());
-     
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void rbtnInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnInscriptasActionPerformed
+        cargarInscriptas();
+        btnAnularInscripcion.setEnabled(true);
+        btnInscribir.setEnabled(false);
+    }//GEN-LAST:event_rbtnInscriptasActionPerformed
 
-    private void tablaInscripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInscripcionMouseClicked
-      
-    }//GEN-LAST:event_tablaInscripcionMouseClicked
+    private void rbtnNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNoInscriptasActionPerformed
+        cargarNoInscriptas();
+        btnInscribir.setEnabled(true);
+        btnAnularInscripcion.setEnabled(false);
+    }//GEN-LAST:event_rbtnNoInscriptasActionPerformed
+
+    private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
+        int fila = tblMaterias.getSelectedRow();
+        if (fila != -1) {
+            Alumno a = (Alumno) cmbAlumnos.getSelectedItem();
+            int id_materia = (Integer) modelo.getValueAt(fila, 0);
+            String nombreMateria = (String) modelo.getValueAt(fila, 1);
+            int anio = (Integer) modelo.getValueAt(fila, 2);
+            Materia m = new Materia(id_materia, nombreMateria, anio, true);
+
+            Inscripcion inscripcion = new Inscripcion(0, a, m);
+            insData.guardarInscripcion(inscripcion);
+            borrarFila();
+            cargarNoInscriptas();
+
+        }
+    }//GEN-LAST:event_btnInscribirActionPerformed
+
+    private void btnAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularInscripcionActionPerformed
+        int fila = tblMaterias.getSelectedRow();
+        if (fila != -1) {
+            Alumno a = (Alumno) cmbAlumnos.getSelectedItem();
+            int id_alumno = a.getId_alumno();
+            int id_materia = (Integer) modelo.getValueAt(fila, 0);
+
+            insData.borrarInscripcion(id_alumno, id_materia);
+            borrarFila();
+            cargarInscriptas();
+        }
+    }//GEN-LAST:event_btnAnularInscripcionActionPerformed
+
+    private void cmbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAlumnosActionPerformed
+        borrarFila();
+        if(rbtnInscriptas.isSelected()) {
+            cargarInscriptas();
+        } else {
+            cargarNoInscriptas();
+        }
+    }//GEN-LAST:event_cmbAlumnosActionPerformed
+
+    public void cargarAlumnos() {
+        for (Alumno aux : listaA) {
+            cmbAlumnos.addItem(aux);
+        }
+    }
+
+    public void armarCabecera() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("ID");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Año");
+        for (Object it : filaCabecera) {
+            modelo.addColumn(it);
+        }
+        tblMaterias.setModel(modelo);
+    }
+
+    public void borrarFila() {
+        int indice = modelo.getRowCount() - 1;
+
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    public void cargarNoInscriptas() {
+        borrarFila();
+        Alumno selec = (Alumno) cmbAlumnos.getSelectedItem();
+        listaM = (ArrayList) insData.obtenerMateriasNoCursadas(selec.getId_alumno());
+        for (Materia m : listaM) {
+            modelo.addRow(new Object[]{m.getId_materia(), m.getNombre(), m.getAnio()});
+        }
+    }
+
+    public void cargarInscriptas() {
+        borrarFila();
+        Alumno selec = (Alumno) cmbAlumnos.getSelectedItem();
+        List<Materia> lista = insData.obtenerMateriasCursadas(selec.getId_alumno());
+        for (Materia m : lista) {
+            modelo.addRow(new Object[]{m.getId_materia(), m.getNombre(), m.getAnio()});
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Alumno> ComboAlumno;
-    private javax.swing.JComboBox<Materia> ComboMat;
+    private javax.swing.JButton btnAnularInscripcion;
     private javax.swing.JButton btnInscribir;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<Alumno> cmbAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaInscripcion;
+    private javax.swing.JRadioButton rbtnInscriptas;
+    private javax.swing.JRadioButton rbtnNoInscriptas;
+    private javax.swing.ButtonGroup rgbtnMaterias;
+    private javax.swing.JTable tblMaterias;
     // End of variables declaration//GEN-END:variables
-
-public void cargarCombo(){
-    AlumnoData alumnoData= new AlumnoData();
-    ArrayList<Alumno> listadoAlumnos = alumnoData.listarAlumnos();
-    for(Alumno aux: listadoAlumnos){
-        ComboAlumno.addItem(aux);
-    }
- 
 }
-public void cargarComboMat(){
-    MateriaData materiaData= new MateriaData();
-   
-    ArrayList<Materia> listadoMateria = materiaData.mostrarMaterias();
-    for(Materia aux: listadoMateria){
-        ComboMat.addItem(aux);
-    }
-    
-}
-public void CargarTabla(){
-    DefaultTableModel modelo= (DefaultTableModel)tablaInscripcion.getModel();
-    modelo.setRowCount(0);
-    AlumnoData alumnoData = new AlumnoData();
-     InscripcionData inscripcionData= new InscripcionData();
-     
-    Alumno alumnoCombo=  (Alumno)ComboAlumno.getSelectedItem();
-    Alumno alumno= alumnoData.buscarAlumnos(alumnoCombo.getDni());
-    
-   ArrayList<Inscripcion> listado= (ArrayList)inscripcionData.obtenerInscripcionesPorAlumno(alumno.getId_alumno());
-   for (Inscripcion aux : listado){
-       
-       String[] fila={
-           aux.getAlumno().toString(),
-           aux.getMateria().toString(),
-           String.valueOf(aux.getNota())
-               
-       } ;
-       modelo.addRow(fila);
-   }
-   
-  
-}
-    public void CargarTablaInicio(){
-    DefaultTableModel modelo= (DefaultTableModel)tablaInscripcion.getModel();
-    modelo.setRowCount(0);
-    AlumnoData alumnoData = new AlumnoData();
-     InscripcionData inscripcionData= new InscripcionData();
-     
-    
-    
-   ArrayList<Inscripcion> listado= (ArrayList)inscripcionData.obtenerInscripciones();
-   for (Inscripcion aux : listado){
-       
-       String[] fila={
-           aux.getAlumno().toString(),
-           aux.getMateria().toString(),
-           String.valueOf(aux.getNota())
-               
-       } ;
-       modelo.addRow(fila);
-   }
-   
-  
-}
-}
-
