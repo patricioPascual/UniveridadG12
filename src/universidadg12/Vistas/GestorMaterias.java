@@ -328,7 +328,7 @@ public class GestorMaterias extends javax.swing.JInternalFrame {
 
     private void btnGuardarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMatActionPerformed
 
-        if (validarCampos()) {
+        if (validarCamposSinCod()) {
             String nombre = txtNombreMat.getText();
             int anio = Integer.parseInt(txtAnioMat.getText());
             String estado = ComboEstadoMat.getSelectedItem().toString();
